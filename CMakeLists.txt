@@ -30,9 +30,19 @@ set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 
+add_compile_options(-Wall -Wextra)
+
 add_custom_target(toolchain
     COMMAND "ARCH=${AMPLEOS_ARCHITECTURE}" "TARGET=${TOOLCHAIN_TARGET}" "TARGET_DIR=${TOOLCHAIN_PATH}" 
         "SOURCE_DIR=${CMAKE_SOURCE_DIR}" "SYSROOT_DIR=${CMAKE_SYSROOT}" ${CMAKE_SOURCE_DIR}/Meta/Scripts/SetupToolchain.sh
+    USES_TERMINAL)
+
+add_custom_target(image
+    COMMAND "SOURCE_DIR=${CMAKE_SOURCE_DIR}" ${CMAKE_SOURCE_DIR}/Meta/Scripts/SetupImage.sh
+    USES_TERMINAL)
+
+add_custom_target(run
+    COMMAND ${CMAKE_SOURCE_DIR}/Meta/Scripts/Run.sh
     USES_TERMINAL)
 
 function(ampleos_bin name)
