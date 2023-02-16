@@ -29,3 +29,12 @@ add_custom_target(toolchain
     COMMAND "ARCH=${AMPLEOS_ARCHITECTURE}" "TARGET=${TOOLCHAIN_TARGET}" "TARGET_DIR=${TOOLCHAIN_PATH}" 
         "SOURCE_DIR=${CMAKE_SOURCE_DIR}" "SYSROOT_DIR=${CMAKE_SYSROOT}" ${CMAKE_SOURCE_DIR}/Meta/Scripts/SetupToolchain.sh
     USES_TERMINAL)
+
+function(ampleos_bin name)
+    add_executable(${name} ${SOURCES})
+    install(TARGETS ${name} RUNTIME DESTINATION bin)
+endfunction()
+
+include_directories(.)
+
+add_subdirectory(Services)
